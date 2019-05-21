@@ -224,13 +224,12 @@ class Extract:
             dic = {"text": text, "tables": None, "images": None}
 
         # saving to pickle file
-        prefix = "/".join(path.split("/")[:-1])
         name = path.split("/")[-1].split(".")[0]
 
-        if not os.path.isdir(prefix + '/pickles/'):
-            os.mkdir(prefix + '/pickles/')
+        if not os.path.isdir(os.getcwd() + '/pickles/'):
+            os.mkdir(os.getcwd() + '/pickles/')
 
-        with open(prefix + '/pickles/' + name + ".pickle", 'wb') as f:
+        with open(os.getcwd() + '/pickles/' + name + ".pickle", 'wb') as f:
             pickle.dump(dic, f)
 
         return dic
