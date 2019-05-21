@@ -129,12 +129,12 @@ class Extract:
                 text2 = " ".join(final_text.split()[i:i + table_text_len])
 
                 sim = self.cos_sim(text1, text2)
-                if sim >= max_cos:
+                if sim > max_cos:
                     max_cos = sim
                     max_i = i
 
-            final_text = " ".join(final_text.split()[:max_i+1]) + " **TABLE{}** ".format(Num + 1) + " ".join(
-                final_text.split()[max_i + table_text_len + 1:])
+            final_text = " ".join(final_text.split()[:max_i]) + " **TABLE{}** ".format(Num + 1) + " ".join(
+                final_text.split()[max_i + table_text_len:])
 
         final_text = re.split("full prescribing information: contents", final_text)
 
