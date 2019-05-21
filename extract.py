@@ -13,10 +13,10 @@ from pdfminer.converter import XMLConverter, HTMLConverter, TextConverter
 
 class Extract:
     """
-    This Package is for extracting tables, table_image, and text from pdf files.
-    Also table areas text in pdf are deleted and be replaced "**table number**".
-    The main function is "pdf_to_pickle", this function's result is dictionary. (dictionary keys: text, tables, images)
-    Image data can show using matplotlib.pyplot package. (plt.imshow())
+    This Package is for extracting tables, table_images, and texts from pdf files.
+    Also texts in the table are deleted and are replaced by "**table number**".
+    The main function is "pdf_to_pickle"; output type of this function is dictionary. (dictionary keys: text, tables, images)
+    Image data can be displayed using matplotlib.pyplot package. (plt.imshow())
     """
 
     def filename_change(self, path):
