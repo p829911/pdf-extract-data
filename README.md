@@ -9,6 +9,18 @@ Image data can be displayed using `matplotlib.pyplot` package. ( `plt.imshow() `
 
 <br><br>
 
+### Installation
+
+- **Using pip**
+
+```bash
+pip3 install pdfextractdata
+```
+
+<br>
+
+<br>
+
 ### USAGE
 
 ```python
