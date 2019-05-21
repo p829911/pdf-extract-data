@@ -133,8 +133,8 @@ class Extract:
                     max_cos = sim
                     max_i = i
 
-            final_text = " ".join(final_text.split()[:max_i]) + " **TABLE{}** ".format(Num + 1) + " ".join(
-                final_text.split()[max_i + table_text_len:])
+            final_text = " ".join(final_text.split()[:max_i+1]) + " **TABLE{}** ".format(Num + 1) + " ".join(
+                final_text.split()[max_i + table_text_len + 1:])
 
         final_text = re.split("full prescribing information: contents", final_text)
 
