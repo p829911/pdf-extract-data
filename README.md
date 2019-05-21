@@ -137,4 +137,5 @@ p.pdf_to_pickle(path)
 
 - **image**
 
-  ![](/home/p829911/.config/Typora/typora-user-images/1558425989562.png)
+  ![](https://user-images.githubusercontent.com/17154958/58079338-becabf00-7beb-11e9-8492-30bada1dae05.png)
+
