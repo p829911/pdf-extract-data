@@ -5,31 +5,32 @@ Also texts in the table are deleted and are replaced by `**table number**`.
 
 The main function is `pdf_to_pickle` ; output type of this function is dictionary. (dictionary keys: text, tables, images)
 
-Image data can be displayed using `matplotlib.pyplot` package. ( `plt.imshow() )
+Image data can be displayed using `matplotlib.pyplot` package. ( `plt.imshow() `)
 
-
+<br><br>
 
 ### USAGE
 
 ```python
 from pdfextractdata.extract import Extract
+
 p = Extract()
 p.pdf_to_pickle(path)
 ```
 
-
+<br><br>
 
 ### Function Description
 
-- `filename_change(path)`
+- `filename_change(path)`  
   if file type is not PDF, convert it to PDF.
 
+<br>
 
-
-- `pdf_to_text(path)`
+- `pdf_to_text(path)`  
   this function can pdf to text using pdfminer package.
 
-
+<br>
 
 - `process_text(text)`
 
@@ -41,7 +42,7 @@ p.pdf_to_pickle(path)
 
   text preprocessing function.
 
-
+<br>
 
 - `cos_sim(sent1, sent2)`
 
@@ -55,7 +56,7 @@ p.pdf_to_pickle(path)
 
   calculate cosine similarity two sentence.
 
-
+<br>
 
 - `process_table(tables)`
 
@@ -67,7 +68,7 @@ p.pdf_to_pickle(path)
 
   preprocessing text in tables.
 
-
+<br>
 
 - `delete_table_text(text, tables)`
 
@@ -81,7 +82,7 @@ p.pdf_to_pickle(path)
 
   texts in the table are deleted and are replaced by `**table number**` ; using above `cos_sim(sent1, sent2)` function.
 
-
+<br>
 
 - `clean_table(tables)`
 
@@ -93,7 +94,7 @@ p.pdf_to_pickle(path)
 
   The camelot package is not enough to display merged columns and rows; so preprocessing table for solving this problems.
 
-
+<br>
 
 - `extracting_images(tables)`
 
@@ -105,7 +106,7 @@ p.pdf_to_pickle(path)
 
   extracting table images from pdf.
 
-
+<br>
 
 - `pdf_to_pickle(path)`
 
@@ -117,26 +118,23 @@ p.pdf_to_pickle(path)
 
   and be saved data in pickle file. saving directory is `working directory/pickle/name.pickle`
 
-  
 
-  
-
-  
+<br><br>
 
 ### OUTPUT
 
-- text
+- **text**
 
   ![](https://user-images.githubusercontent.com/17154958/58078788-84aced80-7bea-11e9-9ff8-ff76f7fd4185.png)
 
+<br>
 
-
-- table
+- **table**
 
   ![](https://user-images.githubusercontent.com/17154958/58078856-ad34e780-7bea-11e9-99ab-50940c1e6ac6.png)
 
+<br>
 
-
-- image
+- **image**
 
   ![](/home/p829911/.config/Typora/typora-user-images/1558425989562.png)
