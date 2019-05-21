@@ -27,7 +27,7 @@ pip3 install pdfextractdata
 from pdfextractdata.extract import Extract
 
 p = Extract()
-p.pdf_to_pickle(path)
+dic = p.pdf_to_pickle(path)
 ```
 
 <br><br>

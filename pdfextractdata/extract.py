@@ -133,8 +133,6 @@ class Extract:
                     max_cos = sim
                     max_i = i
 
-            print(max_cos, max_i)
-
             final_text = " ".join(final_text.split()[:max_i]) + " **TABLE{}** ".format(Num + 1) + " ".join(
                 final_text.split()[max_i + table_text_len:])
 
