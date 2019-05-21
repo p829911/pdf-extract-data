@@ -40,7 +40,7 @@ p.pdf_to_pickle(path)
 <br>
 
 - `pdf_to_text(path)`  
-  this function can pdf to text using pdfminer package.
+  this function can convert pdf to text using pdfminer package.
 
 <br>
 
@@ -60,13 +60,13 @@ p.pdf_to_pickle(path)
 
   **parameter**:
 
-  sent1 is text in tables.
+  sent1 is the text extracted from tables.
 
-  sent2 is original text it's length is same with sent1
+  sent2 is the original text converted from the pdf file; its length is adjusted to match the length of sent1
 
   **function**:
 
-  calculate cosine similarity two sentence.
+  calculate cosine similarity of the two sentences.
 
 <br>
 
@@ -104,7 +104,7 @@ p.pdf_to_pickle(path)
 
   **function**:
 
-  The camelot package is not enough to display merged columns and rows; so preprocessing table for solving this problems.
+  The camelot package is not enough to display merged columns and rows, so preprocess table to solve this problem.
 
 <br>
 
@@ -126,9 +126,9 @@ p.pdf_to_pickle(path)
 
   The main function is `pdf_to_pickle` ; 
 
-  output type of this function is dictionary. (dictionary keys: text, tables, images)
+  output type of this function is dictionary (dictionary keys: text, tables, images)
 
-  and be saved data in pickle file. saving directory is `working directory/pickle/name.pickle`
+  and is saved as pickle file. saving directory is `working directory/pickle/name.pickle`
 
 
 <br><br>
