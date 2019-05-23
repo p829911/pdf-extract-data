@@ -87,8 +87,9 @@ class Preprocessing:
                     max_cos = sim
                     max_i = i
 
-            final_text = " ".join(final_text.split()[:max_i]) + " **TABLE{}** ".format(Num + 1) + " ".join(
-                final_text.split()[max_i + table_text_len:])
+            if max_cos > 0.6:
+                final_text = " ".join(final_text.split()[:max_i]) + " **TABLE{}** ".format(Num + 1) + \
+                             " ".join(final_text.split()[max_i + table_text_len:])
 
         return final_text
 
