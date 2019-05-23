@@ -36,11 +36,14 @@ class Extract(Preprocessing):
 
         # preprocess
         text = self.process_text(text)
-        approval = "".join(re.findall("approval: \d{4}", text))
-        text = re.sub(".*approval: \d{4}", " ", text)
-        text = re.sub("full prescribing information: contents.*?reference id: \d*", " ", text)
-        text = re.sub("reference id: \d*"," ", text)
-        text = approval + text
+
+        try:
+            text = re.split("approval: *\d{4}", text)[1]
+        except:
+            text = text
+
+        text = re.sub("reference id: *\d{7}", "", text)
+        text = re.sub("revised[:]? \d{1,2}/\d{4}", "", text)
 
         return text
 

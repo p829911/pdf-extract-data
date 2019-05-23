@@ -1,0 +1,12 @@
+Metadata-Version: 1.2
+Name: pdfextractdata
+Version: 2.2
+Summary: Python package for extracting data from pdf
+Home-page: https://github.com/p829911/pdf-extract-data
+Author: p829911
+Author-email: p829911@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: pdf extract,extract data from pdf,extract from pdf
+Platform: UNKNOWN
+Requires-Python: >=3

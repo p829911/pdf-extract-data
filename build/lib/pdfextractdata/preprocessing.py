@@ -90,6 +90,20 @@ class Preprocessing:
             final_text = " ".join(final_text.split()[:max_i]) + " **TABLE{}** ".format(Num + 1) + " ".join(
                 final_text.split()[max_i + table_text_len:])
 
+        final_text = re.split("full prescribing information: contents", final_text)
+
+        pre = final_text[0]
+        pre = pre.strip()
+
+        try:
+            post = re.split("sections or subsections omitted from the full prescribing information are not listed.",
+                            final_text[1])[1]
+            post = post.strip()
+        except:
+            post = None
+
+        final_text = [pre, post]
+
         return final_text
 
     def add_blank_cells(self, table):
