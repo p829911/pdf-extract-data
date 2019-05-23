@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pdfextractdata",
-    version="2.0",
+    version="2.2",
     description="Python package for extracting data from pdf",
     author="p829911",
     author_email="p829911@gmail.com",
