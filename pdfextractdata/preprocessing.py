@@ -110,7 +110,11 @@ class Preprocessing:
 
         table.columns = table.iloc[0]
         table = table.iloc[1:]
-        table = table.drop_duplicates()
+
+        try:
+            table = table.drop_duplicates()
+        except:
+            return table
 
         return table
 
