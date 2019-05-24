@@ -18,7 +18,7 @@ class Preprocessing:
     def process_text(self, text):
         text = text.lower()
         text = re.sub("(\[.*?\])", "", text)
-        text = re.sub("[_\t\x0c\n\xad●]", " ", text)
+        text = re.sub("[_\t\x0c\n\xad●\uf0b7®©]", " ", text)
         text = re.sub("•", "", text)
         text = re.sub("-", " ", text)
         text = re.sub(" {2,}", " ", text)
