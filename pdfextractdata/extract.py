@@ -6,7 +6,7 @@ import camelot
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfpage import PDFPage
-from pdfminer.converter import XMLConverter, HTMLConverter, TextConverter
+from pdfminer.converter import TextConverter
 from .preprocessing import Preprocessing
 
 
@@ -40,6 +40,7 @@ class Extract(Preprocessing):
         text = re.sub(".*approval: \d{4}", " ", text)
         text = re.sub("full prescribing information: contents", "be delete!!", text)
         text = re.sub("full prescribing information are not", " ", text)
+        text = re.sub("see full prescribing information", " ", text)
         text = re.sub("reference id: \d*", " ", text)
         text = re.sub("to report .*? www.[\w./]*", " ", text)
         text = re.sub(" {2,}", " ", text)
