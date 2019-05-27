@@ -38,12 +38,18 @@ class Extract(Preprocessing):
         text = self.process_text(text)
         approval = "".join(re.findall("approval: \d{4}", text))
         text = re.sub(".*approval: \d{4}", " ", text)
-        text = re.sub("full prescribing information: contents.*?reference id: \d*", " ", text)
+        text = re.sub("full prescribing information: contents", "be delete!!", text)
+        text = re.sub("full prescribing information are not", " ", text)
         text = re.sub("reference id: \d*", " ", text)
         text = re.sub("to report .*? www.[\w./]*", " ", text)
         text = re.sub(" {2,}", " ", text)
         text = approval + text
         text = text.strip()
+        pre_index = text.find("be delete!!")
+        post_index = text.find("full prescribing information")
+        pre = text[:pre_index]
+        post = text[post_index:]
+        text = pre + post
 
         return text
 
@@ -97,3 +103,46 @@ class Extract(Preprocessing):
                 pickle.dump(dic, f)
 
         return dic
+
+    def contents_split(text):
+        contents_list = [
+            "1 indications and usage",
+            "2 dosage and administration",
+            "3 dosage forms and strengths",
+            "4 contraindications",
+            "5 warnings and precautions",
+            "6 adverse reactions",
+            "7 drug interactions",
+            "8 use in specific populations",
+            "9 drug abuse and dependence",
+            "10 overdosage",
+            "11 description",
+            "12 clinical pharmacology",
+            "13 nonclinical toxicology",
+            "14 clinical studies",
+            "15 references",
+            "16 how supplied/storage and handling",
+            "17 patient counseling information"
+        ]
+        contents_index = []
+        text_list = []
+
+        # find content start index
+        for content in contents_list:
+            contents_index.append(text.find(content))
+
+        # split contents
+        for i in range(len(contents_index)):
+            if not i:
+                pre = text[:contents_index[0]]
+                text_list.append(pre)
+            if contents_index[i] == -1:
+                text_list.append(None)
+            else:
+                try:
+                    text_s = text[contents_index[i]:contents_index[i + 1]]
+                except:
+                    text_s = text[contents_index[i]:]
+                text_list.append(text_s)
+
+        return text_list
