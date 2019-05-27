@@ -39,7 +39,7 @@ class Extract(Preprocessing):
         approval = "".join(re.findall("approval: \d{4}", text))
         text = re.sub(".*approval: \d{4}", " ", text)
         text = re.sub("full prescribing information: contents.*?reference id: \d*", " ", text)
-        text = re.sub("*reference id: \d*", " ", text)
+        text = re.sub("reference id: \d*", " ", text)
         text = re.sub("to report .*? www.[\w./]*", " ", text)
         text = re.sub(" {2,}", " ", text)
         text = approval + text
