@@ -104,7 +104,7 @@ class Extract(Preprocessing):
 
         return dic
 
-    def contents_split(text):
+    def contents_split(self, text):
         contents_list = [
             "1 indications and usage",
             "2 dosage and administration",
