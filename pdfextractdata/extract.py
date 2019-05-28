@@ -50,7 +50,8 @@ class Extract(Preprocessing):
         post_index = text.find("full prescribing information")
         pre = text[:pre_index]
         post = text[post_index:]
-        text = pre + post
+        text = pre + "." + post
+        text = re.sub(" \.", ".", text)
 
         return text
 
