@@ -29,6 +29,7 @@ class Preprocessing:
         text = re.sub(" {2,}", " ", text)
         text = text.strip()
         text = re.sub(" \.", ".", text)
+        text = re.sub("\.\.", ".", text)
 
         return text
 

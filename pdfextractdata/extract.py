@@ -51,7 +51,6 @@ class Extract(Preprocessing):
         pre = text[:pre_index]
         post = text[post_index:]
         text = pre + "." + post
-        text = re.sub(" \.", ".", text)
 
         return text
 
