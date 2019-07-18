@@ -50,9 +50,10 @@ class Extract(Preprocessing):
         post_index = text.find("full prescribing information")
         pre = text[:pre_index]
         post = text[post_index:]
+        contents = text[pre_index:post_index]
         text = pre + "." + post
 
-        return text
+        return contents, text
 
     def pdf_to_table(self, path):
 
@@ -77,7 +78,7 @@ class Extract(Preprocessing):
         # add filename ".pdf" if not ".pdf"
         ch_path = self.filename_change(path)
         # pdf to text
-        text = self.pdf_to_text(ch_path)
+        contents, text = self.pdf_to_text(ch_path)
         # extracting table from pdf using camelot
         tables = self.pdf_to_table(ch_path)
 
@@ -91,7 +92,7 @@ class Extract(Preprocessing):
             dic = {"text": final_text, "tables": table_list, "images": img_list}
 
         else:
-            dic = {"text": text, "tables": None, "images": None}
+            dic = {"text": text, "tables": None, "images": None, "contents": contents}
 
         if save:
             # saving to pickle file
