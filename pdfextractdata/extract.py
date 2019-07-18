@@ -89,7 +89,7 @@ class Extract(Preprocessing):
             table_list = self.clean_table(tables)
             # extract image from table
             img_list = self.extracting_images(tables)
-            dic = {"text": final_text, "tables": table_list, "images": img_list}
+            dic = {"text": final_text, "tables": table_list, "images": img_list, "contents": contents}
 
         else:
             dic = {"text": text, "tables": None, "images": None, "contents": contents}
