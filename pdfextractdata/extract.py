@@ -134,19 +134,19 @@ class Extract(Preprocessing):
         for content in contents_list:
             contents_index.append(text.find(content))
 
+        contents_index_final = [ index for index in contents_index if index != -1 ]
+
         # split contents
-        for i in range(len(contents_index)):
+        for i in range(len(contents_index_final)):
             if not i:
-                pre = text[:contents_index[0]]
+                pre = text[:contents_index_final[0]]
                 text_list.append(pre)
-            if contents_index[i] == -1:
-                text_list.append(None)
-            else:
-                try:
-                    text_s = text[contents_index[i]:contents_index[i + 1]]
-                except:
-                    text_s = text[contents_index[i]:]
-                text_list.append(text_s)
+
+            try:
+                text_s = text[contents_index_final[i]:contents_index_final[i + 1]]
+            except:
+                text_s = text[contents_index_final[i]:]
+            text_list.append(text_s)
 
         return text_list
 
