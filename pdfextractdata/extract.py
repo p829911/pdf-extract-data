@@ -231,11 +231,12 @@ class Extract(Preprocessing):
 
         return title, contexts
 
-    def context_make_dic(self, contexts, contents_list):
+    def context_make_dic(self, title, contexts, contents_list):
+        num = title[:2].strip()
         context_dic = {}
         for context in contexts:
             for content in contents_list:
-                match = re.findall('\d\d?[.]\d\d? ' + content, context)
+                match = re.findall(num + '[.]\d\d? ' + content, context)
                 if len(match):
                     search = re.search(match[0], context)
                     end = search.end()
@@ -244,7 +245,7 @@ class Extract(Preprocessing):
                     context_dic[pre] = post
                     break
             else:
-                match = re.findall('\d\d?[.]\d\d?', context)
+                match = re.findall(num + '[.]\d\d? ', context)
                 if len(match):
                     search = re.search(match[0], context)
                     end = search.end()
