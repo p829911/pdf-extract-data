@@ -264,7 +264,7 @@ class Extract(Preprocessing):
         for i, ls in enumerate(lss):
             if i != 0 and ls:
                 title, contexts = self.split_contexts(ls, contents_list)
-                context_dic = self.context_make_dic(contexts, contents_list)
+                context_dic = self.context_make_dic(title, contexts, contents_list)
                 title_dic[title] = context_dic
 
         return title_dic
