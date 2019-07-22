@@ -194,7 +194,7 @@ class Extract(Preprocessing):
 
         for z in number_final:
             if z.split('.')[0] == number:
-                result = re.search(z, ls)
+                result = re.search(z.split('.')[0] + '[.]' + z.split('.')[1], ls)
                 split_list.append(result.start())
 
         num = len(split_list)
