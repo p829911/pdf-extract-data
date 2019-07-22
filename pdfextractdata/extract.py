@@ -108,6 +108,7 @@ class Extract(Preprocessing):
         return dic
 
     def contents_split(self, text):
+        text = re.sub('–', ' ', text)
         contents_list = [
             "1 indications and usage",
             "2 dosage and administration",
@@ -134,7 +135,7 @@ class Extract(Preprocessing):
         for content in contents_list:
             contents_index.append(text.find(content))
 
-        contents_index_final = [ index for index in contents_index if index != -1 ]
+        contents_index_final = [index for index in contents_index if index != -1]
 
         # split contents
         for i in range(len(contents_index_final)):
@@ -180,17 +181,23 @@ class Extract(Preprocessing):
 
     def split_contexts(self, ls, contents_list):
         split_list = list()
-        number = ls[:2]
-        i = 1
-        while i < 20:
-            result = re.search(number.strip() + '[.]' + str(i), ls)
-            if result:
-                split_list.append(result)
-                i += 1
-        split_list = [(i, split) for i, split in enumerate(split_list) if split]
-        split_list_start = [i.start() for i, split in split_list]
 
-        num = len(split_list_start)
+        number = ls[:2].strip()
+        number_two = re.findall(number + '[.]' + '\d\d? ', ls)
+        number_final = list()
+
+        for i in range(len(number_two)):
+            if int(number_two[i].split('.')[1].strip()) == 1:
+                number_final.append(number_two[i])
+            elif int(number_two[i].split('.')[1].strip()) > int(number_two[i - 1].split('.')[1].strip()):
+                number_final.append(number_two[i])
+
+        for z in number_final:
+            if z.split('.')[0] == number:
+                result = re.search(z, ls)
+                split_list.append(result.start())
+
+        num = len(split_list)
         contexts = list()
         pre = ""
         title = ""
@@ -206,7 +213,7 @@ class Extract(Preprocessing):
         else:
             for i in range(num):
                 if i == 0:
-                    pre = ls[:split_list_start[i]].strip()
+                    pre = ls[:split_list[i]].strip()
                     for content in contents_list:
                         match = re.findall('\d\d? ' + content, pre)
                         if len(match):
@@ -217,10 +224,10 @@ class Extract(Preprocessing):
                             if post:
                                 contexts.append(post)
 
-                if i != num - 1:
-                    contexts.append(ls[split_list_start[i]:split_list_start[i + 1]].strip())
+                if i == num - 1:
+                    contexts.append(ls[split_list[i]:].strip())
                 else:
-                    contexts.append(ls[split_list_start[i]:].strip())
+                    contexts.append(ls[split_list[i]:split_list[i + 1]].strip())
 
         return title, contexts
 
@@ -228,13 +235,23 @@ class Extract(Preprocessing):
         context_dic = {}
         for context in contexts:
             for content in contents_list:
-                match = re.findall('\d[.]\d ' + content, context)
+                match = re.findall('\d\d?[.]\d\d? ' + content, context)
                 if len(match):
                     search = re.search(match[0], context)
                     end = search.end()
                     pre = context[:end].strip()
                     post = context[end:].strip()
                     context_dic[pre] = post
+                    break
+            else:
+                match = re.findall('\d\d?[.]\d\d?', context)
+                if len(match):
+                    search = re.search(match[0], context)
+                    end = search.end()
+                    pre = context[:end].strip()
+                    post = context[end:].strip()
+                    context_dic[pre] = post
+
         if context_dic == {}:
             context_dic["content"] = contexts
         return context_dic
