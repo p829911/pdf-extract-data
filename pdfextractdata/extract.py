@@ -40,6 +40,7 @@ class Extract(Preprocessing):
         text = re.sub(".*approval: \d{4}", " ", text)
         text = re.sub("full prescribing information: contents", "be delete!!", text)
         text = re.sub("full prescribing information are not", " ", text)
+        text = re.sub("full prescribing information are", " ", text)
         text = re.sub("see full prescribing information", " ", text)
         text = re.sub("reference id: \d*", " ", text)
         text = re.sub("to report .*? www.[\w./]*", " ", text)
@@ -51,7 +52,7 @@ class Extract(Preprocessing):
         pre = text[:pre_index]
         post = text[post_index:]
         contents = text[pre_index:post_index]
-        text = pre + "." + post
+        text = pre + ". prepostdividing" + post
 
         return contents, text
 
@@ -148,3 +149,105 @@ class Extract(Preprocessing):
                 text_list.append(text_s)
 
         return text_list
+
+    def contents_words(self, dic):
+        contents_list = [
+            "indications and usage",
+            "dosage and administration",
+            "dosage forms and strengths",
+            "contraindications",
+            "warnings and precautions",
+            "adverse reactions",
+            "drug interactions",
+            "use in specific populations",
+            "drug abuse and dependence",
+            "overdosage",
+            "description",
+            "clinical pharmacology",
+            "nonclinical toxicology",
+            "clinical studies",
+            "references",
+            "how supplied/storage and handling",
+            "patient counseling information"
+        ]
+        for word in re.split('(\d.?[.]\d| \d\d? |[*])', dic['contents']):
+            if len(word.strip()) != 0 and len(re.findall('[\d*.!-]', word.strip())) == 0:
+                contents_list.append(word.strip())
+
+        contents_list = list(set(contents_list))
+
+        return contents_list
+
+    def split_contexts(self, ls, contents_list):
+        split_list = list()
+        number = ls[:2]
+        i = 1
+        while True:
+            result = re.search(number.strip() + '[.]' + str(i), ls)
+            if result:
+                split_list.append(result)
+                i += 1
+            else:
+                break
+        split_list_start = [i.start() for i in split_list]
+
+        num = len(split_list_start)
+        contexts = list()
+        pre = ""
+        title = ""
+
+        if num == 0:
+            for content in contents_list:
+                match = re.findall('\d\d? ' + content, ls)
+                if len(match):
+                    search = re.search(match[0], ls)
+                    end = search.end()
+                    title = ls[:end].strip()
+                    contexts.append(ls[end:].strip())
+        else:
+            for i in range(num):
+                if i == 0:
+                    pre = ls[:split_list_start[i]].strip()
+                    for content in contents_list:
+                        match = re.findall('\d\d? ' + content, pre)
+                        if len(match):
+                            search = re.search(match[0], pre)
+                            end = search.end()
+                            title = pre[:end].strip()
+                            post = pre[end:].strip()
+                            if post:
+                                contexts.append(post)
+
+                if i != num - 1:
+                    contexts.append(ls[split_list_start[i]:split_list_start[i + 1]].strip())
+                else:
+                    contexts.append(ls[split_list_start[i]:].strip())
+
+        return title, contexts
+
+    def context_make_dic(self, contexts, contents_list):
+        context_dic = {}
+        for context in contexts:
+            for content in contents_list:
+                match = re.findall('\d[.]\d ' + content, context)
+                if len(match):
+                    search = re.search(match[0], context)
+                    end = search.end()
+                    pre = context[:end].strip()
+                    post = context[end:].strip()
+                    context_dic[pre] = post
+        if context_dic == {}:
+            context_dic["content"] = contexts
+        return context_dic
+
+    def pickle_make_dic(self, dic):
+        contents_list = self.contents_words(dic)
+        lss = self.contents_split(dic['text'])
+        title_dic = {}
+        for i, ls in enumerate(lss):
+            if i != 0 and ls:
+                title, contexts = self.split_contexts(ls, contents_list)
+                context_dic = self.context_make_dic(contexts, contents_list)
+                title_dic[title] = context_dic
+
+        return title_dic
