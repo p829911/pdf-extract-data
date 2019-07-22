@@ -182,14 +182,13 @@ class Extract(Preprocessing):
         split_list = list()
         number = ls[:2]
         i = 1
-        while True:
+        while i < 20:
             result = re.search(number.strip() + '[.]' + str(i), ls)
             if result:
                 split_list.append(result)
                 i += 1
-            else:
-                break
-        split_list_start = [i.start() for i in split_list]
+        split_list = [(i, split) for i, split in enumerate(split_list) if split]
+        split_list_start = [i.start() for i, split in split_list]
 
         num = len(split_list_start)
         contexts = list()
