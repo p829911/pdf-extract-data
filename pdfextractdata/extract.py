@@ -254,7 +254,7 @@ class Extract(Preprocessing):
                     context_dic[pre] = post
 
         if context_dic == {}:
-            context_dic["content"] = contexts
+            context_dic["content"] = contexts[0]
         return context_dic
 
     def pickle_make_dic(self, dic):
